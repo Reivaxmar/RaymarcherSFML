@@ -19,6 +19,7 @@ public:
     Raymarcher();
     void Update();
     CollideInfo ShootRay(Vector2f from, double dir, Scene& scene);
+    void Fisheye(double dir);
     vector<CollideInfo> hitInfo;
 private:
     virtual void draw(RenderTarget& target, RenderStates states) const;

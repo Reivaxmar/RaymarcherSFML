@@ -8,10 +8,6 @@ void Raymarcher::Update() {
     // cout << "Updating..." << endl;
     // Reset the hitInfo vector
     hitInfo.resize(0);
-    // Shoot a ray in the player direction
-    // for(int i = -20; i <= 20; i++) {
-    //     ShootRay(player.GetPosition(), player.GetRotation()+i, scene);
-    // }
 }
 
 void Raymarcher::draw(RenderTarget& target, RenderStates states) const {
@@ -63,4 +59,8 @@ CollideInfo Raymarcher::ShootRay(Vector2f from, double dir, Scene& scene) {
         hitInfo.push_back(CollideInfo{objIdx, curPos, distFromO});
     }
     return hitInfo[hitInfo.size()-1];
+}
+
+void Raymarcher::Fisheye(double dir) {
+    hitInfo[hitInfo.size()-1].dist *= cos(dir*DEG_TO_RAD);
 }

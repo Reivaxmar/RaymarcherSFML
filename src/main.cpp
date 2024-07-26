@@ -10,7 +10,7 @@ using namespace std;
 int main() {
     // Create the window
     RenderWindow window(VideoMode(1200, 675), "Raymarcher", Style::Close | Style::Titlebar);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(240);
 
     // Create the player object
     Player player(Vector2f(100, 100));
@@ -19,8 +19,10 @@ int main() {
     // The scene object
     Scene scene;
     // And add a circle to the scene
-    scene.objs.push_back(std::make_shared<Circle>(100, Vector2f(500, 250), Color::Red));
-    scene.objs.push_back(std::make_shared<Circle>(100, Vector2f(500, 500), Color::Blue));
+    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 250), Color::Red));
+    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 500), Color::Blue));
+    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(201, 100), Vector2f(200, 500)));
+    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(100, 201), Vector2f(500, 500)));
 
     // For calculating the delta time
     Clock clock;
@@ -34,7 +36,7 @@ int main() {
                 window.close();
         }
         // Delta time stuff
-        float deltaTime = (clock.getElapsedTime().asSeconds() * 1000.f - lastTime * 1000.f) / 60.f;
+        float deltaTime = (clock.getElapsedTime().asSeconds() - lastTime) * 100.f;
         lastTime = clock.getElapsedTime().asSeconds();
 
         // Update the player
