@@ -13,4 +13,13 @@ cmake -G "Type" .. # Change "Type" for whatever else you want to generate the pr
 ```
 
 ## Features
-Currently, its pretty basic. The only thing that it has is a good class based structure and a basic renderer for circles with plain colors.
+Currently, its pretty basic. The only thing that it has is a good class based structure and a basic renderer for circles and rectangles with plain colors.
+## In the future
+- [x] Fix fisheye and other camera effects
+- [ ] Add more complex shapes
+- [ ] Level editor
+- [ ] Shader code
+- [ ] 3D version (other repository)
+
+## Credits
+This project was highly inspired by [Sebastian Lague's](https://www.youtube.com/@SebastianLague) Coding Adventure episode on [raymarching](https://www.youtube.com/watch?v=Cp5WWtMoeKg)
