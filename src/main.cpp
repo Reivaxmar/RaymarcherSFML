@@ -7,10 +7,18 @@ using namespace std;
 #include "Objects.h"
 #include "Renderer.h"
 
+void setupScene(Scene& scene) {
+    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 250), Color::Red));
+    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 500), Color::Blue));
+    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(201, 100), Vector2f(200, 500)));
+    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(100, 201), Vector2f(500, 500)));
+}
+
 int main() {
     // Create the window
     RenderWindow window(VideoMode(1200, 675), "Raymarcher", Style::Close | Style::Titlebar);
-    window.setFramerateLimit(240);
+    // window.setFramerateLimit(240);
+    window.setVerticalSyncEnabled(true);
 
     // Create the player object
     Player player(Vector2f(100, 100));
@@ -18,11 +26,8 @@ int main() {
     Renderer renderer(90, 675);
     // The scene object
     Scene scene;
-    // And add a circle to the scene
-    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 250), Color::Red));
-    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 500), Color::Blue));
-    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(201, 100), Vector2f(200, 500)));
-    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(100, 201), Vector2f(500, 500)));
+    // Add everything to the scene
+    setupScene(scene);
 
     // For calculating the delta time
     Clock clock;
@@ -38,6 +43,7 @@ int main() {
         // Delta time stuff
         float deltaTime = (clock.getElapsedTime().asSeconds() - lastTime) * 100.f;
         lastTime = clock.getElapsedTime().asSeconds();
+        if(!window.hasFocus()) continue;
 
         // Update the player
         player.Update(deltaTime);
