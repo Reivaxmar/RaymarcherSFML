@@ -16,7 +16,7 @@ cmake -G "Type" .. # Change "Type" for whatever else you want to generate the pr
 Currently, its pretty basic. The only thing that it has is a good class based structure and a basic renderer for circles and rectangles with plain colors.
 ## In the future
 - [x] Fix fisheye and other camera effects
-- [ ] Add more complex shapes
+- [x] Add more complex shapes
 - [ ] Level editor
 - [ ] Shader code
 - [ ] 3D version (other repository)
