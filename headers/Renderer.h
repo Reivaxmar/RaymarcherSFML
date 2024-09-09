@@ -13,6 +13,7 @@ public:
     void draw(RenderTarget& target, Scene& scene);
 private:
     virtual void draw(RenderTarget& target, RenderStates states) const;
+    void addColor(RectangleShape& line, Scene& scene, CollideInfo info);
     Raymarcher m_raymarcher;
     int m_FOV;
     int m_nRays;

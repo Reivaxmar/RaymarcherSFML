@@ -24,6 +24,7 @@ public:
 private:
     virtual void draw(RenderTarget& target, RenderStates states) const;
     vector<pair<Vector2f, double>> m_circles;
+    double smoothMin(double a, double b, double k = 100);
 };
 
 #endif

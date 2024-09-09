@@ -5,7 +5,6 @@ Raymarcher::Raymarcher() {
 }
 
 void Raymarcher::Update() {
-    // cout << "Updating..." << endl;
     // Reset the hitInfo vector
     hitInfo.resize(0);
 }
@@ -33,6 +32,8 @@ CollideInfo Raymarcher::ShootRay(Vector2f from, double dir, Scene& scene) {
     // And the index of the final collided object
     int objIdx = 0;
 
+    bool doSmoothMin = true;
+
     Vector2f curPos = from;
     // While the circle is neither too small nor too big
     while(dist > minDist && dist < maxDist) {
@@ -43,10 +44,15 @@ CollideInfo Raymarcher::ShootRay(Vector2f from, double dir, Scene& scene) {
         for(int i = 1; i < scene.objs.size(); i++) {
             double newDist = scene.objs[i]->getDistance(curPos);
             if(newDist < dist) {
-                dist = newDist;
+                if(!doSmoothMin) {
+                    dist = min(dist, newDist);
+                }
                 objIdx = i;
             }
+            if(doSmoothMin)
+                dist = smoothMin(dist, newDist);
         }
+        
         // Move the current position
         Vector2f addPos = Vector2f(cos(dir * DEG_TO_RAD) * dist, sin(dir * DEG_TO_RAD) * dist);
         curPos += addPos;
@@ -54,13 +60,23 @@ CollideInfo Raymarcher::ShootRay(Vector2f from, double dir, Scene& scene) {
     if(dist >= maxDist) {
         hitInfo.push_back(CollideInfo{-1, from, 0.0});
     } else {
-        Vector2f deltaPos = curPos-from;
-        double distFromO = sqrt(deltaPos.x*deltaPos.x+deltaPos.y*deltaPos.y);
-        hitInfo.push_back(CollideInfo{objIdx, curPos, distFromO});
+        if(dist < -minDist) {
+            hitInfo.push_back(CollideInfo{objIdx, curPos, dist, -1});
+        } else {
+            Vector2f deltaPos = curPos-from;
+            double distFromO = sqrt(deltaPos.x*deltaPos.x+deltaPos.y*deltaPos.y);
+            hitInfo.push_back(CollideInfo{objIdx, curPos, distFromO, -1});
+        }
     }
+
     return hitInfo[hitInfo.size()-1];
 }
 
 void Raymarcher::Fisheye(double dir) {
     hitInfo[hitInfo.size()-1].dist *= cos(dir*DEG_TO_RAD);
+}
+
+double Raymarcher::smoothMin(double a, double b, double k) {
+    double h = max(k-abs(a-b), 0.0) / k;
+    return min(a, b) - h*h*h*k*1/6.0;
 }

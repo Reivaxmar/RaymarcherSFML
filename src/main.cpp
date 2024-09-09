@@ -8,10 +8,7 @@ using namespace std;
 #include "Renderer.h"
 
 void setupScene(Scene& scene) {
-    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 250), Color::Red));
-    scene.objs.push_back(std::make_shared<Objs::Circle>(100, Vector2f(500, 500), Color::Blue));
-    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(201, 100), Vector2f(200, 500)));
-    scene.objs.push_back(std::make_shared<Objs::Rect>(Vector2f(100, 201), Vector2f(500, 500)));
+    scene.loadFromFile("assets/Scenes/example_scene.sc");
 }
 
 int main() {
